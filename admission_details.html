@@ -1,0 +1,95 @@
+<!-- 新页面的 HTML 文件，保存为 admission_details.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>招生详细信息</title>
+    <style>
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        table {
+            width: 80%;
+            margin: 0 auto;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+<table>
+    <tr>
+        <th>省份</th>
+        <th>城市</th>
+        <th>招生方式</th>
+        <th>科类名称/选考科目</th>
+        <th>咨询方式</th>
+    </tr>
+    <!-- 这里填充招生详细信息 -->
+</table>
+
+<script>
+    // 招生详细信息列表
+    var detailsList = [
+        { province: '河北', city: '', method: '本科批-单列招生', subjects: '首选物理再选化学或生物', contact: '周老师 15012501311<br>张老师 13989821134<br>王老师 13262715960<br>竺老师 18058762661<br>王老师 17855806845'},
+        { province: '吉林', city: '', method: '本一批-单列招生', subjects: '首选物理再选化学或生物', contact: '金老师 19518379685<br>卫老师 15850630550' },
+        { province: '河南', city: '衢州', method: '本一批-单列招生', subjects: '理工', contact: '洪老师 19558420607<br>周老师 17816392161<br>张老师 19818339856'},
+        { province: '安徽', city: '金华', method: '本一批-单列招生', subjects: '首选物理再选化学或生物', contact: '王老师 17764513386<br>朱老师 13064688018' },
+        { province: '江西', city: '丽水', method: '本一批-单列招生', subjects: '首选物理再选化学或生物', contact: '郭老师 17816397596<br>刘老师 15068375718' },
+        { province: '四川', city: '宁波', method: '本一批-单列招生', subjects: '理工', contact: '谢老师 19857388036<br>王老师 18069869791' },
+        { province: '福建', city: '湖州', method: '本科批-单列招生', subjects: '首选物理再选化学或生物', contact: '陈老师 13400715954<br>沈老师 18717796897<br>茅老师 13105727531' },
+        { province: '湖南', city: '温州', method: '本科批-单列招生', subjects: '首选物理再选化学或生物', contact: '刘老师 13370289709<br>黄老师 18067942167' },
+        { province: '辽宁', city: '绍兴', method: '本科批-单列招生', subjects: '首选物理再选化学或生物', contact: '王老师 13024206161<br>周老师 13989803902<br>杨老师 13758073270<br>蔡老师 13758370671' },
+        { province: '湖北', city: '嘉兴', method: '本科批-单列招生', subjects: '首选物理再选化学或生物', contact: '邱老师 19703866219<br>余老师 18268152256<br>金老师 15068365218' },
+        { province: '浙江', city: '', method: '“三位一体”', subjects: '物理与化学', contact: '周老师 13735489622<br>方老师 15821967737<br>黄老师 18067942167<br>周老师 13989803902<br>徐老师 13305811182' },
+        { province: '广东', city: '', method: '综合评价', subjects: '首选物理再选化学或生物', contact: '刘老师 19818339202<br>陈老师 18130346927<br>贾老师 18058762679<br>陈老师 18055370927' },
+        { province: '山东', city: '', method: '综合评价', subjects: '物理与化学', contact: '孟老师 19534210129<br>徐老师 15700078667<br>李老师 18660596735' },
+        { province: '江苏', city: '', method: '综合评价', subjects: '首选物理再选化学或生物', contact: '袁老师 18059230081<br>谭老师 13585256636' },
+        { province: '上海', city: '台州', method: '综合评价', subjects: '物理与化学', contact: '黄老师 13691003535<br>李老师 13567147334' },
+
+        // Add more details as needed
+    ];
+
+    // 获取表格元素
+    var table = document.querySelector('table');
+
+    // 遍历招生详细信息列表，创建表格行并追加到表格中
+    detailsList.forEach(function(detail) {
+        var row = table.insertRow();
+        var cells = [
+            row.insertCell(0),
+            row.insertCell(1),
+            row.insertCell(2),
+            row.insertCell(3),
+            row.insertCell(4)
+        ];
+
+        // 填充表格单元格
+        cells[0].textContent = detail.province;
+        cells[1].textContent = detail.city;
+        cells[2].textContent = detail.method;
+        cells[3].textContent = detail.subjects;
+        cells[4].innerHTML = detail.contact;
+    });
+</script>
+
+</body>
+</html>
