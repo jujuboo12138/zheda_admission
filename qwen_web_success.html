@@ -202,111 +202,28 @@
     }
 
     // Function for sending messages
-    // function sendMessage() {
-    //     var userInput = document.getElementById('userInput');
-    //     var chatHistory = document.getElementById('chatHistory');
-    //     var botResponse = document.getElementById('botResponse');
-
-    //     if (userInput.value.trim()) {
-    //         // 创建用户和机器人消息的容器
-    //         var messageContainer = document.createElement('div');
-    //         messageContainer.classList.add('message-container');
-
-    //         // 将用户消息附加到消息容器
-    //         var userDiv = document.createElement('div');
-    //         userDiv.textContent = '用户: ' + userInput.value.trim();
-    //         userDiv.classList.add('user');
-    //         messageContainer.appendChild(userDiv);
-
-    //         // 在等待机器人回复时将botResponse设置为用户输入
-    //         botResponse.innerHTML = '正在处理您的问题: ' + userInput.value.trim() + '<br>';
-
-    //         // 保存原始用户输入值
-    //         var originalUserInput = userInput.value.trim();
-
-    //         // 显示动态加载指示符
-    //         var loadingText = '正在处理您的问题';
-    //         var dots = 0;
-    //         var loadingInterval = setInterval(function () {
-    //             userInput.value = loadingText + '…'.repeat(dots);
-    //             dots = (dots + 1) % 4;
-    //         }, 500);
-
-    //         // 使用支持凭据的HTTP POST请求发送到您的API
-    //         var xhr = new XMLHttpRequest();
-    //         xhr.open('POST', 'https://183.136.238.107:26071/process_user_input', true);
-    //         // xhr.open('POST', 'https://vfk4vn.natappfree.cc/process_user_input', true);
-
-    //         // 为JSON设置适当的内容类型
-    //         xhr.setRequestHeader('Content-Type', 'application/json');
-
-    //         xhr.onreadystatechange = function () {
-    //             if (xhr.readyState === 4) {
-    //                 // 清除加载指示符定时器
-    //                 clearInterval(loadingInterval);
-
-    //                 if (xhr.status === 200) {
-    //                     // 处理来自API的响应
-    //                     var response = JSON.parse(xhr.responseText);
-    //                     var botReply = response.botResponse;
-
-    //                     // 使用包含机器人回复的完整消息更新botResponse
-    //                     botResponse.innerHTML += botReply + '<br>';
-
-    //                     // 为消息容器创建删除按钮
-    //                     var deleteBtn = document.createElement('button');
-    //                     deleteBtn.textContent = '删除';
-    //                     deleteBtn.classList.add('delete-btn');
-    //                     deleteBtn.onclick = function () {
-    //                         chatHistory.removeChild(messageContainer);
-    //                     };
-    //                     messageContainer.appendChild(deleteBtn);
-
-    //                     // 为可视分隔添加水平线元素
-    //                     var hr = document.createElement('hr');
-    //                     messageContainer.appendChild(hr);
-
-    //                     chatHistory.appendChild(messageContainer);
-    //                     chatHistory.scrollTop = chatHistory.scrollHeight;
-
-    //                     // 收到响应后清除输入字段
-    //                     userInput.value = '';
-    //                 } else {
-    //                     // 处理错误
-    //                     console.error('错误:', xhr.status, xhr.statusText);
-
-    //                     // 在出错的情况下恢复原始用户输入值
-    //                     userInput.value = originalUserInput;
-    //                 }
-    //             }
-    //         };
-
-    //         // 将用户输入发送到您的API
-    //         xhr.send(JSON.stringify({ 'userMessage': originalUserInput }));
-    //     }
-    // }
     function sendMessage() {
         var userInput = document.getElementById('userInput');
         var chatHistory = document.getElementById('chatHistory');
         var botResponse = document.getElementById('botResponse');
-    
+
         if (userInput.value.trim()) {
             // 创建用户和机器人消息的容器
             var messageContainer = document.createElement('div');
             messageContainer.classList.add('message-container');
-    
+
             // 将用户消息附加到消息容器
             var userDiv = document.createElement('div');
             userDiv.textContent = '用户: ' + userInput.value.trim();
             userDiv.classList.add('user');
             messageContainer.appendChild(userDiv);
-    
+
             // 在等待机器人回复时将botResponse设置为用户输入
             botResponse.innerHTML = '正在处理您的问题: ' + userInput.value.trim() + '<br>';
-    
+
             // 保存原始用户输入值
             var originalUserInput = userInput.value.trim();
-    
+
             // 显示动态加载指示符
             var loadingText = '正在处理您的问题';
             var dots = 0;
@@ -314,58 +231,141 @@
                 userInput.value = loadingText + '…'.repeat(dots);
                 dots = (dots + 1) % 4;
             }, 500);
-    
-            // 使用 Fetch API 发送到您的 API
-            fetch('https://183.136.238.107:26071/process_user_input', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Access-Control-Allow-Origin': '*' // 根据需求设置
-                },
-                body: JSON.stringify({ 'userMessage': originalUserInput })
-            })
-            .then(response => response.json())
-            .then(data => {
-                // 清除加载指示符定时器
-                clearInterval(loadingInterval);
-    
-                // 处理来自 API 的响应
-                var botReply = data.botResponse;
-    
-                // 使用包含机器人回复的完整消息更新 botResponse
-                botResponse.innerHTML += botReply + '<br>';
-    
-                // 为消息容器创建删除按钮
-                var deleteBtn = document.createElement('button');
-                deleteBtn.textContent = '删除';
-                deleteBtn.classList.add('delete-btn');
-                deleteBtn.onclick = function () {
-                    chatHistory.removeChild(messageContainer);
-                };
-                messageContainer.appendChild(deleteBtn);
-    
-                // 为可视分隔添加水平线元素
-                var hr = document.createElement('hr');
-                messageContainer.appendChild(hr);
-    
-                chatHistory.appendChild(messageContainer);
-                chatHistory.scrollTop = chatHistory.scrollHeight;
-    
-                // 收到响应后清除输入字段
-                userInput.value = '';
-            })
-            .catch(error => {
-                // 清除加载指示符定时器
-                clearInterval(loadingInterval);
-    
-                // 处理错误
-                console.error('错误:', error);
-    
-                // 在出错的情况下恢复原始用户输入值
-                userInput.value = originalUserInput;
-            });
+
+            // 使用支持凭据的HTTP POST请求发送到您的API
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'https://183.136.238.107:26071/process_user_input', true);
+            // xhr.open('POST', 'https://vfk4vn.natappfree.cc/process_user_input', true);
+
+            // 为JSON设置适当的内容类型
+            xhr.setRequestHeader('Content-Type', 'application/json');
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    // 清除加载指示符定时器
+                    clearInterval(loadingInterval);
+
+                    if (xhr.status === 200) {
+                        // 处理来自API的响应
+                        var response = JSON.parse(xhr.responseText);
+                        var botReply = response.botResponse;
+
+                        // 使用包含机器人回复的完整消息更新botResponse
+                        botResponse.innerHTML += botReply + '<br>';
+
+                        // 为消息容器创建删除按钮
+                        var deleteBtn = document.createElement('button');
+                        deleteBtn.textContent = '删除';
+                        deleteBtn.classList.add('delete-btn');
+                        deleteBtn.onclick = function () {
+                            chatHistory.removeChild(messageContainer);
+                        };
+                        messageContainer.appendChild(deleteBtn);
+
+                        // 为可视分隔添加水平线元素
+                        var hr = document.createElement('hr');
+                        messageContainer.appendChild(hr);
+
+                        chatHistory.appendChild(messageContainer);
+                        chatHistory.scrollTop = chatHistory.scrollHeight;
+
+                        // 收到响应后清除输入字段
+                        userInput.value = '';
+                    } else {
+                        // 处理错误
+                        console.error('错误:', xhr.status, xhr.statusText);
+
+                        // 在出错的情况下恢复原始用户输入值
+                        userInput.value = originalUserInput;
+                    }
+                }
+            };
+
+            // 将用户输入发送到您的API
+            xhr.send(JSON.stringify({ 'userMessage': originalUserInput }));
         }
     }
+    // function sendMessage() {
+    //     var userInput = document.getElementById('userInput');
+    //     var chatHistory = document.getElementById('chatHistory');
+    //     var botResponse = document.getElementById('botResponse');
+    
+    //     if (userInput.value.trim()) {
+    //         // 创建用户和机器人消息的容器
+    //         var messageContainer = document.createElement('div');
+    //         messageContainer.classList.add('message-container');
+    
+    //         // 将用户消息附加到消息容器
+    //         var userDiv = document.createElement('div');
+    //         userDiv.textContent = '用户: ' + userInput.value.trim();
+    //         userDiv.classList.add('user');
+    //         messageContainer.appendChild(userDiv);
+    
+    //         // 在等待机器人回复时将botResponse设置为用户输入
+    //         botResponse.innerHTML = '正在处理您的问题: ' + userInput.value.trim() + '<br>';
+    
+    //         // 保存原始用户输入值
+    //         var originalUserInput = userInput.value.trim();
+    
+    //         // 显示动态加载指示符
+    //         var loadingText = '正在处理您的问题';
+    //         var dots = 0;
+    //         var loadingInterval = setInterval(function () {
+    //             userInput.value = loadingText + '…'.repeat(dots);
+    //             dots = (dots + 1) % 4;
+    //         }, 500);
+    
+    //         // 使用 Fetch API 发送到您的 API
+    //         fetch('https://183.136.238.107:26071/process_user_input', {
+    //             method: 'POST',
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //                 'Access-Control-Allow-Origin': '*' // 根据需求设置
+    //             },
+    //             body: JSON.stringify({ 'userMessage': originalUserInput })
+    //         })
+    //         .then(response => response.json())
+    //         .then(data => {
+    //             // 清除加载指示符定时器
+    //             clearInterval(loadingInterval);
+    
+    //             // 处理来自 API 的响应
+    //             var botReply = data.botResponse;
+    
+    //             // 使用包含机器人回复的完整消息更新 botResponse
+    //             botResponse.innerHTML += botReply + '<br>';
+    
+    //             // 为消息容器创建删除按钮
+    //             var deleteBtn = document.createElement('button');
+    //             deleteBtn.textContent = '删除';
+    //             deleteBtn.classList.add('delete-btn');
+    //             deleteBtn.onclick = function () {
+    //                 chatHistory.removeChild(messageContainer);
+    //             };
+    //             messageContainer.appendChild(deleteBtn);
+    
+    //             // 为可视分隔添加水平线元素
+    //             var hr = document.createElement('hr');
+    //             messageContainer.appendChild(hr);
+    
+    //             chatHistory.appendChild(messageContainer);
+    //             chatHistory.scrollTop = chatHistory.scrollHeight;
+    
+    //             // 收到响应后清除输入字段
+    //             userInput.value = '';
+    //         })
+    //         .catch(error => {
+    //             // 清除加载指示符定时器
+    //             clearInterval(loadingInterval);
+    
+    //             // 处理错误
+    //             console.error('错误:', error);
+    
+    //             // 在出错的情况下恢复原始用户输入值
+    //             userInput.value = originalUserInput;
+    //         });
+    //     }
+    // }
    
 
 </script>
